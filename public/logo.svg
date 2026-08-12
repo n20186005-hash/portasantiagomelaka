@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 88" role="img" aria-labelledby="title desc">
+  <title id="title">A Famosa Melaka</title>
+  <desc id="desc">Simbol gerbang batu Porta de Santiago dan nama A Famosa Melaka.</desc>
+  <g fill="none" stroke="#9b3b2f" stroke-width="5" stroke-linejoin="round">
+    <path d="M15 72V38L27 30V19h12v11l10 8v34H15Z" fill="#f2dfbd"/>
+    <path d="M24 72V51c0-8 6-14 13-14s13 6 13 14v21"/>
+    <path d="M32 18V8h7v10M18 38h36"/>
+  </g>
+  <circle cx="37" cy="49" r="3.5" fill="#264b4b"/>
+  <g fill="#2c2926">
+    <text x="72" y="39" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700" letter-spacing="1">A FAMOSA</text>
+    <text x="74" y="63" font-family="Arial, sans-serif" font-size="14" letter-spacing="4.5" fill="#6f604f">MELAKA</text>
+  </g>
+</svg>
