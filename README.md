@@ -25,7 +25,9 @@ pnpm deploy
 
 Domain hanya ditetapkan di satu tempat: pemboleh ubah `site` dalam `astro.config.mjs`.
 
-Secara lalai nilainya kosong. Dalam keadaan ini laman masih boleh dibina, canonical mutlak tidak dikeluarkan dan integrasi sitemap tidak diaktifkan. Apabila domain sebenar telah tersedia, isi nilai `site` sahaja dan bina semula; canonical, Open Graph, JSON-LD dan sitemap akan memperoleh URL daripada konfigurasi Astro tersebut.
+Nilai semasa ialah `https://portasantiagomelaka.com`, jadi canonical mutlak, Open Graph, JSON-LD dan `sitemap-index.xml` dijana secara automatik. `public/robots.txt` turut menghala ke sitemap tersebut.
+
+Alihkan semua trafik HTTP ke HTTPS melalui Cloudflare (Always Use HTTPS) supaya berat halaman tidak terbelah antara dua protokol; HSTS dihantar melalui `public/_headers`.
 
 ## Struktur utama
 

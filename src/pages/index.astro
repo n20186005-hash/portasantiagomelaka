@@ -1,11 +1,24 @@
 ---
 import '../styles/global.css';
 
-const title = 'A Famosa Melaka — Panduan Porta de Santiago, Banda Hilir';
-const description = 'Panduan ringkas untuk melawat A Famosa (Porta de Santiago) di Banda Hilir, Melaka: sejarah, kos, masa terbaik, pengangkutan, parkir, makanan dan tarikan berdekatan.';
+const title = 'Porta de Santiago (A Famosa) Melaka — Sejarah, Kos Masuk, Waktu & Peta';
+const description = 'Rancang lawatan ke Porta de Santiago (A Famosa) di Banda Hilir, Melaka: sejarah kubu Portugis, kos masuk, waktu terbaik, pengangkutan, parkir, peta dan tarikan berdekatan — semak panduan penuh di sini.';
 const site = Astro.site;
 const canonical = site ? new URL(Astro.url.pathname, site).href : undefined;
 const socialImage = site ? new URL('/images/a-famosa-hero.webp', site).href : '/images/a-famosa-hero.webp';
+const mapsUrl = 'https://maps.app.goo.gl/GoR1cJtJjNYFLbq9A';
+const plusCode = '57R2+P4 Malacca, Malaysia';
+const ratingValue = 4.4;
+const ratingCount = 19711;
+const ratingSync = 'September 2026';
+const ratingText = `${ratingValue.toFixed(1)} / 5 · ${ratingCount.toLocaleString('ms-MY')} ulasan Google`;
+const heroPriority = { fetchpriority: 'high' } as Record<string, string>;
+const aliases = [
+  { label: 'A Famosa', note: 'nama yang paling banyak digunakan oleh pelawat' },
+  { label: 'Porta de Santiago', note: 'nama gerbang batu yang masih kekal' },
+  { label: 'Gerbang A Famosa', note: 'sebutan Melayu untuk pintu kubu ini' },
+  { label: 'Kubu Portugis Melaka', note: 'merujuk kubu asal yang dibina selepas 1511' },
+];
 
 const faq = [
   {
@@ -32,12 +45,29 @@ const faq = [
     q: 'Apakah tarikan yang boleh dikunjungi dengan berjalan kaki?',
     a: 'Bukit dan Gereja St. Paul sangat hampir. Dataran Belanda, Stadthuys, Memorial Pengisytiharan Kemerdekaan dan Muzium Istana Kesultanan Melaka juga berada dalam kawasan warisan yang mudah digabungkan dalam satu laluan berjalan kaki.',
   },
+  {
+    q: 'Apakah nama lain untuk A Famosa?',
+    a: 'Gerbang yang masih berdiri ini dikenali sebagai Porta de Santiago. Ia juga disebut Gerbang A Famosa atau pintu gerbang kubu Portugis Melaka, merujuk kubu asal yang dibina selepas penaklukan 1511.',
+  },
+  {
+    q: 'Berapakah bayaran masuk ke A Famosa?',
+    a: 'Tiada bayaran masuk untuk kawasan terbuka Porta de Santiago. Muzium, memorial dan tarikan berbayar di sekitar Jln Kota mengenakan caj dan waktu operasi mereka sendiri, jadi sediakan bajet berasingan jika mahu masuk ke bangunan tersebut.',
+  },
+  {
+    q: 'Di manakah lokasi tepat Porta de Santiago?',
+    a: 'Terletak di Jln Kota, Banda Hilir, 75000 Melaka, Malaysia. Koordinatnya sekitar 2.1916 U, 102.2503 T dan kod plus 57R2+P4 Malacca — berguna jika aplikasi peta anda menyokongnya.',
+  },
+  {
+    q: 'Berapa rating A Famosa di Google?',
+    a: `Setakat ${ratingSync}, penyenaraian A Famosa menunjukkan sekitar ${ratingValue} daripada 5 bintang berdasarkan ${ratingCount.toLocaleString('ms-MY')} ulasan. Angka ini boleh berubah mengikut masa, jadi semak penyenaraian semasa sebelum merancang lawatan.`,
+  },
 ];
 
 const attractionSchema = {
   '@context': 'https://schema.org',
-  '@type': ['TouristAttraction', 'LocalBusiness'],
-  name: 'A Famosa (Porta de Santiago)',
+  '@type': ['TouristAttraction', 'LandmarksOrHistoricalBuildings'],
+  name: 'Porta de Santiago (A Famosa)',
+  alternateName: ['A Famosa', 'Porta de Santiago', 'Gerbang A Famosa', 'Kubu Portugis Melaka'],
   description,
   ...(canonical && site ? { url: canonical, image: [new URL('/images/a-famosa-hero.webp', site).href] } : {}),
   address: {
@@ -53,7 +83,12 @@ const attractionSchema = {
     latitude: 2.1916167,
     longitude: 102.2503056,
   },
+  hasMap: mapsUrl,
+  sameAs: [mapsUrl],
+  ...(canonical ? { mainEntityOfPage: { '@type': 'WebPage', '@id': canonical } } : {}),
   isAccessibleForFree: true,
+  publicAccess: true,
+  touristType: ['Sejarah', 'Warisan', 'Seni bina'],
   openingHoursSpecification: [{
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -62,9 +97,11 @@ const attractionSchema = {
   }],
   aggregateRating: {
     '@type': 'AggregateRating',
-    ratingValue: 3.8,
-    reviewCount: 752,
+    ratingValue: ratingValue,
+    reviewCount: ratingCount,
+    ratingCount: ratingCount,
     bestRating: 5,
+    worstRating: 1,
   },
 };
 
@@ -97,15 +134,18 @@ const faqSchema = {
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Porta de Santiago (A Famosa) Melaka" />
     <meta property="og:locale" content="ms_MY" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="Gerbang batu Porta de Santiago, baki kubu A Famosa di Banda Hilir, Melaka" />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content="Gerbang batu Porta de Santiago, baki kubu A Famosa di Banda Hilir, Melaka" />
 
     <script type="application/ld+json" set:html={JSON.stringify(attractionSchema)}></script>
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
@@ -137,12 +177,17 @@ const faqSchema = {
     <main>
       <section id="utama" class="hero" aria-labelledby="tajuk-utama">
         <div class="hero-media" aria-hidden="true">
-          <img src="/images/a-famosa-hero.webp" width="1800" height="1197" alt="" fetchpriority="high" />
+          <img src="/images/a-famosa-hero.webp" width="1800" height="1197" alt="" {...heroPriority} />
         </div>
         <div class="container hero-content">
-          <div class="hero-kicker">Jejak kota lama di Banda Hilir</div>
+          <div class="hero-kicker">Porta de Santiago · Gerbang bersejarah Banda Hilir</div>
           <h1 id="tajuk-utama" class="display">A Famosa</h1>
           <p class="hero-copy">Sebuah gerbang kecil dengan sejarah yang sangat besar. Porta de Santiago ialah sisa paling dikenali daripada kubu Portugis yang pernah mengawal pesisir Melaka.</p>
+          <p class="hero-rating">
+            <span class="stars" aria-hidden="true">★★★★☆</span>
+            <strong>{ratingText}</strong>
+            <span class="hero-rating-note">ulasan Google, disegerakkan {ratingSync}</span>
+          </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#pengangkutan">Cara ke sini <span aria-hidden="true">→</span></a>
             <a class="btn btn-ghost" href="#lawatan">Rancang lawatan</a>
@@ -173,6 +218,15 @@ const faqSchema = {
             </div>
           </div>
         </div>
+        <div class="container alias-band" aria-labelledby="tajuk-nama">
+          <h2 id="tajuk-nama" class="alias-title">Turut dikenali sebagai</h2>
+          <ul class="alias-list">
+            {aliases.map((item) => (
+              <li><b>{item.label}</b><span>{item.note}</span></li>
+            ))}
+          </ul>
+          <p class="alias-note">Satu struktur, beberapa nama: gerbang batu ini muncul sebagai A Famosa, Porta de Santiago dan gerbang kubu Portugis Melaka bergantung pada peta, papan tanda atau bahasa yang digunakan.</p>
+        </div>
       </section>
 
       <section id="lawatan" class="visit-band">
@@ -188,7 +242,9 @@ const faqSchema = {
               <div class="info-row"><span>Waktu akses</span><strong>Kawasan terbuka · 24 jam</strong></div>
               <div class="info-row"><span>Tempoh dicadang</span><strong>30–60 minit · 1.5–2 jam dengan Bukit St. Paul</strong></div>
               <div class="info-row"><span>Masa terbaik</span><strong>Awal pagi atau lewat petang</strong></div>
+              <div class="info-row"><span>Ulasan pelawat</span><strong>{ratingText}</strong></div>
             </div>
+            <p class="note">Angka ulasan disegerakkan daripada penyenaraian Google Maps pada {ratingSync} dan boleh berubah. Semak <a href={mapsUrl} target="_blank" rel="noopener noreferrer">penyenaraian Google Maps</a> untuk nilai semasa serta lokasi tepat gerbang.</p>
             <div class="note">Muzium dan bangunan bersejarah berdekatan mempunyai waktu operasi serta bayaran berasingan. Semak notis di lokasi jika anda mahu masuk ke tarikan tersebut.</div>
           </div>
         </div>
@@ -281,6 +337,12 @@ const faqSchema = {
               </article>
             </div>
           </div>
+          <ul class="nearby-list">
+            <li><b>Bukit St. Paul (St. Paul's Hill)</b> — pendakian singkat dari gerbang menuju runtuhan gereja dan pandangan ke Selat Melaka.</li>
+            <li><b>Jonker Street / Jonker Walk</b> — lorong warisan untuk kuih, cendol, kedai antik dan pasar malam hujung minggu.</li>
+            <li><b>Muzium Istana Kesultanan Melaka (Malacca Sultanate Palace Museum)</b> — replika istana kesultanan di Jln Kota, sesuai digabungkan dalam laluan yang sama.</li>
+            <li><b>Memorial Pengisytiharan Kemerdekaan &amp; Dataran Belanda</b> — Stadthuys dan Christ Church dengan bangunan merah ikonik, beberapa minit berjalan kaki.</li>
+          </ul>
         </div>
       </section>
 
@@ -324,6 +386,7 @@ const faqSchema = {
           <img class="footer-logo" src="/logo.svg" width="360" height="88" loading="lazy" alt="A Famosa Melaka" />
           <p class="disclaimer">Laman panduan pelawat ini tidak rasmi dan tidak mewakili pengurusan A Famosa, agensi kerajaan atau mana-mana badan warisan.</p>
           <p class="credits">Foto tempatan: A Famosa oleh Matthias Bethke, CC BY-SA 4.0; Porta de Santiago dan Gereja St. Paul oleh Gryffindor, CC BY-SA 3.0; Dataran Belanda oleh Vmenkov, CC BY-SA 2.5; Asam Pedas Ikan Pari oleh Elly Suhailee, CC BY-SA 4.0. Sumber: <a href="https://commons.wikimedia.org/" rel="noopener noreferrer">Wikimedia Commons</a>. Imej telah dikecilkan dan ditukar format untuk web.</p>
+          <p class="credits">Alamat: Jln Kota, Banda Hilir, 75000 Melaka, Malaysia · kod plus {plusCode} · {ratingText} (disegerakkan daripada Google Maps, {ratingSync}).</p>
         </div>
         <div class="footer-links" aria-label="Pautan bahagian">
           <a href="#lawatan">Lawatan</a>
@@ -332,6 +395,16 @@ const faqSchema = {
           <a href="#sekitar">Tarikan</a>
           <a href="#faq">FAQ</a>
         </div>
+      </div>
+      <div class="container sources" aria-labelledby="tajuk-sumber">
+        <h2 id="tajuk-sumber" class="sources-title">Sumber rasmi &amp; rujukan luar</h2>
+        <ul class="sources-list">
+          <li><a href={mapsUrl} target="_blank" rel="noopener noreferrer">Google Maps — A Famosa / Porta de Santiago</a></li>
+          <li><a href="https://www.mbmb.gov.my/ms/pelancongan/destinasi-menarik" target="_blank" rel="noopener noreferrer">Majlis Bandaraya Melaka Bersejarah (MBMB) — destinasi menarik</a></li>
+          <li><a href="https://www.tourism.gov.my/" target="_blank" rel="noopener noreferrer">Tourism Malaysia — laman rasmi</a></li>
+          <li><a href="https://www.melaka.gov.my/" target="_blank" rel="noopener noreferrer">Portal Rasmi Kerajaan Negeri Melaka</a></li>
+          <li><a href="https://whc.unesco.org/en/list/1223" target="_blank" rel="noopener noreferrer">UNESCO — Melaka &amp; George Town, Bandar Bersejarah Selat Melaka</a></li>
+        </ul>
       </div>
     </footer>
   </body>
